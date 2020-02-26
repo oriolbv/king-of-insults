@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GameplayManager : MonoBehaviour
+public class _GameplayManager : MonoBehaviour
 {
     public Text HistoryText;
     public Transform AnswersParent;
