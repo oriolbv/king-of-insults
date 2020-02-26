@@ -1,25 +1,6 @@
-﻿using UnityEngine;
-
-public class GameplayManager : MonoBehaviour
-{
-    private void Start()
-    {
-        int player = GetRandomPlayer();
-        Debug.Log("RandomPlayer: " + player.ToString());
-
-        GameplayState gs = new GameplayState();
-        //currentNode = StoryFiller.FillStory();
-        //HistoryText.text = string.Empty;
-        //FillUi();
-    }
-
-    private int GetRandomPlayer()
-    {
-        // Return a random integer number between 1 [inclusive] and 3 [exclusive]
-        return Random.Range(1, 3);
-    }
-
-}
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class GameplayState : MonoBehaviour
 {
@@ -42,7 +23,7 @@ public interface IActualGameplayState
 
 public class PlayerTurnState : IActualGameplayState
 {
-    private readonly GameplayState gameplayState;
+    private readonly GameplayState gameplayState = null;
 
     public IActualGameplayState GetActualState()
     {
@@ -67,7 +48,7 @@ public class PlayerTurnState : IActualGameplayState
 
 public class EnemyTurnState : IActualGameplayState
 {
-    private readonly GameplayState gameplayState;
+    private readonly GameplayState gameplayState = null;
 
     public IActualGameplayState GetActualState()
     {
@@ -92,7 +73,7 @@ public class EnemyTurnState : IActualGameplayState
 
 public class EndGameState : IActualGameplayState
 {
-    private readonly GameplayState gameplayState;
+    private readonly GameplayState gameplayState = null;
 
     public IActualGameplayState GetActualState()
     {
@@ -112,6 +93,6 @@ public class EndGameState : IActualGameplayState
     public void ToEndGameState()
     {
         Debug.Log("You're already in Player turn!");
-        
+
     }
 }
