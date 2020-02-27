@@ -8,9 +8,14 @@ public class GameplayManager : MonoBehaviour
         Debug.Log("RandomPlayer: " + player.ToString());
 
         GameplayState gs = new GameplayState();
+        //gs.actualGameplayState = new StartGameState(gs);
         //currentNode = StoryFiller.FillStory();
         //HistoryText.text = string.Empty;
         //FillUi();
+        Debug.Log("Actual State: " + gs.actualGameplayState.ToString());
+        gs.actualGameplayState.ToStartGameState();
+        Debug.Log("Actual State: " + gs.actualGameplayState.ToString());
+        gs.actualGameplayState.ToPlayerTurnState();
         Debug.Log("Actual State: " + gs.actualGameplayState.ToString());
     }
 
