@@ -28,6 +28,8 @@ public interface IActualGameplayState
 {
     IActualGameplayState GetActualState();
 
+    void ExecuteState();
+
     void ToStartGameState();
 
     void ToPlayerTurnState();
@@ -51,6 +53,11 @@ public class StartGameState : IActualGameplayState
         return gameplayState.startGameState;
     }
 
+    public void ExecuteState()
+    {
+
+    }
+
     public void ToStartGameState()
     {
         Debug.Log("You're already in Start game!");
@@ -59,11 +66,13 @@ public class StartGameState : IActualGameplayState
     public void ToPlayerTurnState()
     {
         gameplayState.actualGameplayState = gameplayState.playerTurnState;
+        gameplayState.actualGameplayState.ExecuteState();
     }
 
     public void ToEnemyTurnState()
     {
         gameplayState.actualGameplayState = gameplayState.enemyTurnState;
+        gameplayState.actualGameplayState.ExecuteState();
     }
 
     public void ToEndGameState()
@@ -81,9 +90,15 @@ public class PlayerTurnState : IActualGameplayState
     {
         gameplayState = gs;
     }
+
     public IActualGameplayState GetActualState()
     {
         return gameplayState.playerTurnState;
+    }
+
+    public void ExecuteState()
+    {
+        Debug.Log("Fill the text dialog with Insults");
     }
 
     public void ToStartGameState()
@@ -121,6 +136,11 @@ public class EnemyTurnState : IActualGameplayState
         return gameplayState.enemyTurnState;
     }
 
+    public void ExecuteState()
+    {
+        Debug.Log("Fill the text dialog with Answers");
+    }
+
     public void ToStartGameState()
     {
         gameplayState.actualGameplayState = gameplayState.startGameState;
@@ -156,6 +176,11 @@ public class EndGameState : IActualGameplayState
         return gameplayState.endGameState;
     }
 
+    public void ExecuteState()
+    {
+
+    }
+
     public void ToStartGameState()
     {
         gameplayState.actualGameplayState = gameplayState.startGameState;
@@ -163,12 +188,12 @@ public class EndGameState : IActualGameplayState
 
     public void ToPlayerTurnState()
     {
-        gameplayState.actualGameplayState = gameplayState.playerTurnState;
+        Debug.Log("Transition NOT permitted");
     }
 
     public void ToEnemyTurnState()
     {
-        gameplayState.actualGameplayState = gameplayState.enemyTurnState;
+        Debug.Log("Transition NOT permitted");
     }
 
     public void ToEndGameState()
