@@ -13,10 +13,13 @@ public class GameplayState
 
     public GameplayState()
     {
+        // Initialization of all states
         startGameState = new StartGameState(this);
         playerTurnState = new PlayerTurnState(this);
         enemyTurnState = new EnemyTurnState(this);
         endGameState = new EndGameState(this);
+
+        // At initialization, we set the actual gameplay state to StartGameState
         actualGameplayState = startGameState;
     }
 
@@ -69,7 +72,6 @@ public class StartGameState : IActualGameplayState
 
     }
 }
-
 
 public class PlayerTurnState : IActualGameplayState
 {

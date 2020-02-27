@@ -7,16 +7,20 @@ public class GameplayManager : MonoBehaviour
         int player = GetRandomPlayer();
         Debug.Log("RandomPlayer: " + player.ToString());
 
+        // Initialization of the state machine
         GameplayState gs = new GameplayState();
-        //gs.actualGameplayState = new StartGameState(gs);
-        //currentNode = StoryFiller.FillStory();
-        //HistoryText.text = string.Empty;
-        //FillUi();
-        Debug.Log("Actual State: " + gs.actualGameplayState.ToString());
-        gs.actualGameplayState.ToStartGameState();
-        Debug.Log("Actual State: " + gs.actualGameplayState.ToString());
-        gs.actualGameplayState.ToPlayerTurnState();
-        Debug.Log("Actual State: " + gs.actualGameplayState.ToString());
+        if (player == 1)
+        {
+            // Transition to PlayerTurnState
+            gs.actualGameplayState.ToPlayerTurnState();
+        }
+        else
+        {
+            // Transition to EnemyTurnState
+            gs.actualGameplayState.ToEnemyTurnState();
+        }
+
+        Debug.Log("Turn: " + gs.actualGameplayState.ToString());
     }
 
     private int GetRandomPlayer()
