@@ -5,6 +5,7 @@ public class GameplayManager : MonoBehaviour
 {
     public Transform OptionButtons;
     public GameObject ButtonPrefab;
+    public GameObject InsultText;
 
     private void Start()
     {
@@ -31,11 +32,10 @@ public class GameplayManager : MonoBehaviour
 
     public void FillUI()
     {
-
-        //foreach (Transform child in OptionButtons.transform)
-        //{
-        //    Destroy(child.gameObject);
-        //}
+        foreach (Transform child in OptionButtons.transform)
+        {
+            Destroy(child.gameObject);
+        }
 
         var isLeft = true;
         var height = 50.0f;
@@ -43,20 +43,22 @@ public class GameplayManager : MonoBehaviour
         var insults = InsultFiller.FillInsults();
         foreach (var insult in insults)
         {
-            Debug.Log(insult.Answer);
 
-            var buttonAnswerCopy = Instantiate(ButtonPrefab, OptionButtons, true);
+            var insultText = Instantiate(InsultText, OptionButtons, false);
+            insultText.transform.SetParent(OptionButtons.transform, false);
 
-            var x = buttonAnswerCopy.GetComponent<RectTransform>().rect.x * 1.3f;
-            buttonAnswerCopy.GetComponent<RectTransform>().localPosition = new Vector3(isLeft ? x : -x, height, 0);
+            var x = insultText.GetComponent<RectTransform>().rect.x * 2.3f;
+            //var y = insultText.GetComponent<RectTransform>().rect.y * 2.3f;
+            //height = heig
+            insultText.GetComponent<RectTransform>().localPosition = new Vector3(x, height, 0);
 
-            if (!isLeft)
-                height += buttonAnswerCopy.GetComponent<RectTransform>().rect.y * 3.0f;
-            isLeft = !isLeft;
+            height += insultText.GetComponent<RectTransform>().rect.y * 2.0f;
 
-            FillListener(buttonAnswerCopy.GetComponent<Button>(), index);
 
-            buttonAnswerCopy.GetComponentInChildren<Text>().text = insult.Answer;
+            FillListener(insultText.GetComponent<Button>(), index);
+            
+
+            insultText.GetComponentInChildren<Text>().text = insult.Answer;
 
             index++;
         }
@@ -72,7 +74,21 @@ public class GameplayManager : MonoBehaviour
         Debug.Log("Index button: " + index.ToString());
     }
 
+    void OnMouseOver()
+    {
+        Debug.Log(gameObject.name);
+    }
 
+
+    //public void OnPointerEnter(PointerEventData eventData)
+    //{
+    //    theText.color = Color.red; //Or however you do your color
+    //}
+
+    //public void OnPointerExit(PointerEventData eventData)
+    //{
+    //    theText.color = Color.white; //Or however you do your color
+    //}
     private int GetRandomPlayer()
     {
         // Return a random integer number between 1 [inclusive] and 3 [exclusive]

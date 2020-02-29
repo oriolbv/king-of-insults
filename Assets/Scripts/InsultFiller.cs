@@ -23,8 +23,42 @@ public static class InsultFiller
             "Even BEFORE they smell your breath?"));
 
         insults.Add(CreateNode(
-            "I once owned a dog that was smarter then you.",
+            "I once owned a dog that was smarter than you.",
             "He must have taught you everything you know."));
+
+        insults.Add(CreateNode(
+            "You make me want to puke.",
+            "You make me think somebody already did."));
+        insults.Add(CreateNode(
+            "Nobody’s ever drawn blood from me and nobody ever will.",
+            "You run THAT fast?"));
+        insults.Add(CreateNode(
+            "You fight like a dairy farmer.",
+            "How appropriate. You fight like a cow."));
+        insults.Add(CreateNode(
+            "I got this scar on my face during a mighty struggle!",
+            "I hope now you’ve learned to stop picking your nose."));
+        insults.Add(CreateNode(
+            "Have you stopped wearing diapers yet?",
+            "Why, did you want to borrow one?"));
+        insults.Add(CreateNode(
+            "I’ve heard you were a contemptible sneak.",
+            "Too bad no one’s ever heard of YOU at all."));
+        insults.Add(CreateNode(
+            "You’re no match for my brains, you poor fool.",
+            "I’d be in real trouble if you ever used them."));
+        insults.Add(CreateNode(
+            "You have the manners of a beggar.",
+            "I wanted to make sure you’d feel comfortable with me."));
+        insults.Add(CreateNode(
+            "I’m not going to take your insolence sitting down!",
+            "Your hemorrhoids are flaring up again, eh?"));
+        insults.Add(CreateNode(
+            "There are no words for how disgusting you are.",
+            "Yes there are. You just never learned them."));
+        insults.Add(CreateNode(
+            "I’ve spoken with apes more polite then you.",
+            "I’m glad to hear you attended your family reunion."));
 
         return insults.ToArray();
     }
