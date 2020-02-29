@@ -7,25 +7,27 @@ public class GameplayManager : MonoBehaviour
     public GameObject ButtonPrefab;
     public GameObject InsultText;
 
+
+    private GameplayState _gs;
     private void Start()
     {
         int player = GetRandomPlayer();
         Debug.Log("RandomPlayer: " + player.ToString());
 
         // Initialization of the state machine
-        GameplayState gs = new GameplayState();
+        _gs = new GameplayState();
         if (player == 1)
         {
             // Transition to PlayerTurnState
-            gs.actualGameplayState.ToPlayerTurnState();
+            _gs.actualGameplayState.ToPlayerTurnState();
         }
         else
         {
             // Transition to EnemyTurnState
-            gs.actualGameplayState.ToEnemyTurnState();
+            _gs.actualGameplayState.ToEnemyTurnState();
         }
 
-        Debug.Log("Turn: " + gs.actualGameplayState.ToString());
+        Debug.Log("Turn: " + _gs.actualGameplayState.ToString());
 
         FillUI();
     }
@@ -56,9 +58,9 @@ public class GameplayManager : MonoBehaviour
 
 
             FillListener(insultText.GetComponent<Button>(), index);
-            
 
-            insultText.GetComponentInChildren<Text>().text = insult.Answer;
+            if (_gs.actualGameplayState is PlayerTurnState) insultText.GetComponentInChildren<Text>().text = insult.Insult;
+            else insultText.GetComponentInChildren<Text>().text = insult.Answer;
 
             index++;
         }
