@@ -309,6 +309,8 @@ MonoBehaviour:
     type: 3}
   InsultText: {fileID: 8962702667774087677, guid: 9ea1832bf9dd2a84ca287ee6a393dfd4,
     type: 3}
+  PlayerText: {fileID: 672319034}
+  EnemyText: {fileID: 553337809}
 --- !u!1 &148535426
 GameObject:
   m_ObjectHideFlags: 0

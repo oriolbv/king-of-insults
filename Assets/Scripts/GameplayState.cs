@@ -55,7 +55,7 @@ public class StartGameState : IActualGameplayState
 
     public void ExecuteState()
     {
-
+        
     }
 
     public void ToStartGameState()
