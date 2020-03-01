@@ -461,6 +461,8 @@ MonoBehaviour:
     type: 3}
   PlayerText: {fileID: 672319034}
   EnemyText: {fileID: 553337809}
+  PlayerLivesText: {fileID: 1911443718}
+  EnemyLivesText: {fileID: 14385796}
 --- !u!1 &148535426
 GameObject:
   m_ObjectHideFlags: 0

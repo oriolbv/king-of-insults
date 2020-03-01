@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
@@ -9,12 +11,16 @@ public class GameplayManager : MonoBehaviour
     public GameObject PlayerText;
     public GameObject EnemyText;
 
+    public GameObject PlayerLivesText;
+    public GameObject EnemyLivesText;
+
 
     private GameplayState _gs;
     private InsultNode[] _insults;
     private int _insultIdx = -1;
     private int _answerIdx = -1;
     private int _firstTurn = -1;
+    private int _roundWinner = -1;
 
     // Lives
     private int _playerLives = 3;
@@ -30,6 +36,7 @@ public class GameplayManager : MonoBehaviour
 
         // Initialization of the state machine
         _gs = new GameplayState();
+        _firstTurn = player;
         if (player == 1)
         {
             // Transition to PlayerTurnState
@@ -43,8 +50,6 @@ public class GameplayManager : MonoBehaviour
             WriteEnemyOption();
         }
 
-        _firstTurn = player;
-        
         FillUI();
 
 
@@ -112,7 +117,7 @@ public class GameplayManager : MonoBehaviour
 
     public void CheckRoundWinner()
     {
-        Debug.Log("AND THE WINNER IS....");
+        Debug.Log("AND THE WINNER OF THIS ROUND IS....");
         if (_insultIdx == _answerIdx)
         {
             // Wins the one that answered the insult
@@ -120,11 +125,15 @@ public class GameplayManager : MonoBehaviour
             {
                 // Enemy wins
                 Debug.Log("The Enemy");
+                _playerLives -= 1;
+                _roundWinner = 2;
             }
             else
             {
                 // Player wins
                 Debug.Log("The Player");
+                _enemyLives -= 1;
+                _roundWinner = 1;
             }
         }
         else
@@ -134,19 +143,77 @@ public class GameplayManager : MonoBehaviour
             {
                 // Player wins
                 Debug.Log("The Player");
+                _enemyLives -= 1;
+                _roundWinner = 1;
             }
             else
             {
                 // Enemy wins
                 Debug.Log("The Enemy");
+                _playerLives -= 1;
+                _roundWinner = 2;
             }
 
         }
+        // Update number of lives in game scene
+        PlayerLivesText.GetComponentInChildren<Text>().text = "x" + _playerLives.ToString();
+        EnemyLivesText.GetComponentInChildren<Text>().text = "x" + _enemyLives.ToString();
 
+
+
+        // Check if the game has finished
+        if (_enemyLives == 0)
+        {
+            Debug.Log("Enemy wins the game");
+            _gs.actualGameplayState.ToEndGameState();
+            SceneManager.LoadScene("EndGameScene");
+        }
+        if (_playerLives == 0)
+        {
+            Debug.Log("Player wins the game");
+            _gs.actualGameplayState.ToEndGameState();
+            SceneManager.LoadScene("EndGameScene");
+        }
+
+        RemoveUI();
+
+        waiter();
+
+        EnemyText.GetComponentInChildren<Text>().text = "";
+        PlayerText.GetComponentInChildren<Text>().text = "";
+        
+        // Initializate all for the next round
+        InitRound();
+
+    }
+    IEnumerator waiter()
+    {
+        //Wait for 4 seconds
+        yield return new WaitForSeconds(4);
+    }
+
+    public void InitRound()
+    {
         _firstTurn = -1;
         _insultIdx = -1;
         _answerIdx = -1;
+        if (_roundWinner == 1)
+        {
+            // Player will begin the next round
+            _firstTurn = 1;
+            _gs.actualGameplayState.ToPlayerTurnState();
+        }
+        else
+        {
+            // Enemy will begin the next round
+            _firstTurn = 2;
+            _gs.actualGameplayState.ToEnemyTurnState();
+            // Enemy will choose randomly his first insult
+            WriteEnemyOption();
+        }
+        FillUI();
     }
+
 
     private void FillListener(Button button, int index)
     {
