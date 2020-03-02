@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -176,8 +177,6 @@ public class GameplayManager : MonoBehaviour
         }
 
         RemoveUI();
-
-        waiter();
 
         EnemyText.GetComponentInChildren<Text>().text = "";
         PlayerText.GetComponentInChildren<Text>().text = "";
