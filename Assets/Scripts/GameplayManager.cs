@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameplayManager : MonoBehaviour
+public class GameplayManager : ExtendedBehaviour
 {
     public Transform OptionButtons;
     public GameObject ButtonPrefab;
@@ -160,7 +160,9 @@ public class GameplayManager : MonoBehaviour
         PlayerLivesText.GetComponentInChildren<Text>().text = "x" + _playerLives.ToString();
         EnemyLivesText.GetComponentInChildren<Text>().text = "x" + _enemyLives.ToString();
 
-
+        Debug.Log("Espera 1");
+        
+        
 
         // Check if the game has finished
         if (_enemyLives == 0)
@@ -176,23 +178,21 @@ public class GameplayManager : MonoBehaviour
             SceneManager.LoadScene("EndGameScene");
         }
 
+        // Initializate all for the next round
+        Wait(2, () => {
+            InitRound();
+        });
+    }
+   
+
+
+    public void InitRound()
+    {
         RemoveUI();
 
         EnemyText.GetComponentInChildren<Text>().text = "";
         PlayerText.GetComponentInChildren<Text>().text = "";
-        
-        // Initializate all for the next round
-        InitRound();
 
-    }
-    IEnumerator waiter()
-    {
-        //Wait for 4 seconds
-        yield return new WaitForSeconds(4);
-    }
-
-    public void InitRound()
-    {
         _firstTurn = -1;
         _insultIdx = -1;
         _answerIdx = -1;
