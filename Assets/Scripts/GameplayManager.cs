@@ -66,7 +66,6 @@ public class GameplayManager : ExtendedBehaviour
         
         foreach (var insult in _insults)
         {
-
             var insultText = Instantiate(InsultText, OptionButtons, false);
             insultText.transform.SetParent(OptionButtons.transform, false);
 
