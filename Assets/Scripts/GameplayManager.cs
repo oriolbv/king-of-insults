@@ -61,7 +61,7 @@ public class GameplayManager : ExtendedBehaviour
         // Fill down space with all the Insults/Answers, depending on the current turn.
         RemoveUI();
 
-        var height = 50.0f;
+        var height = 500.0f;
         var index = 0;
         
         foreach (var insult in _insults)
@@ -69,12 +69,17 @@ public class GameplayManager : ExtendedBehaviour
             var insultText = Instantiate(InsultText, OptionButtons, false);
             insultText.transform.SetParent(OptionButtons.transform, false);
 
-            var x = insultText.GetComponent<RectTransform>().rect.x * 2.3f;
-        
+            //var x = insultText.GetComponent<RectTransform>().rect.x * 2.3f;
+            var x = insultText.GetComponent<RectTransform>().rect.x * 2.1f;
+
             insultText.GetComponent<RectTransform>().localPosition = new Vector3(x, height, 0);
+            
+            //obj.transform.localPosition = Vector3.zero;
+            height += insultText.GetComponent<RectTransform>().rect.y * 1.2f;
 
-            height += insultText.GetComponent<RectTransform>().rect.y * 2.0f;
-
+            //GameObject theBar = GameObject.Find("Canvas/loadBar");
+            //var theBarRectTransform = theBar.transform as RectTransform;
+            insultText.GetComponent<RectTransform>().sizeDelta = new Vector2(300, insultText.GetComponent<RectTransform>().sizeDelta.y);
 
             FillListener(insultText.GetComponent<Button>(), index);
 
