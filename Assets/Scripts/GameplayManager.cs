@@ -34,28 +34,17 @@ public class GameplayManager : ExtendedBehaviour
 
     private void Start()
     {
-        int player = GetRandomPlayer();
-
         // Fill all the insults and answers to use during the duel
         _insults = InsultFiller.FillInsults();
-
         // Initialization of the state machine
         _gs = new GameplayState();
-        _firstTurn = player;
-        if (player == 1)
-        {
-            // Transition to PlayerTurnState
-            _gs.actualGameplayState.ToPlayerTurnState();
-        }
-        else
-        {
-            // Transition to EnemyTurnState
-            _gs.actualGameplayState.ToEnemyTurnState();
-            // Enemy will choose randomly his first insult
-            WriteEnemyOption();
-        }
 
-        FillUI();
+        RoundText.GetComponentInChildren<Text>().text = "Round " + _nRound.ToString();
+
+        // Initializate all for the next round
+        Wait(2, () => {
+            InitRound();
+        });
     }
 
     public void FillUI()
@@ -210,13 +199,32 @@ public class GameplayManager : ExtendedBehaviour
             _firstTurn = 1;
             _gs.actualGameplayState.ToPlayerTurnState();
         }
-        else
+        else if (_roundWinner == 2)
         {
             // Enemy will begin the next round
             _firstTurn = 2;
             _gs.actualGameplayState.ToEnemyTurnState();
             // Enemy will choose randomly his first insult
             WriteEnemyOption();
+        } 
+        else
+        {
+            // First round of the duel
+            int player = GetRandomPlayer();
+            _firstTurn = player;
+            if (player == 1)
+            {
+                // Transition to PlayerTurnState
+                _gs.actualGameplayState.ToPlayerTurnState();
+            }
+            else
+            {
+                // Transition to EnemyTurnState
+                _gs.actualGameplayState.ToEnemyTurnState();
+                // Enemy will choose randomly his first insult
+                WriteEnemyOption();
+            }
+
         }
         FillUI();
     }
