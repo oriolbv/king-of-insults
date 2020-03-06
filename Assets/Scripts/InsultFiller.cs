@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditorInternal.VersionControl;
+using UnityEngine;
 
 public static class InsultFiller
 {
     public static InsultNode[] FillInsults()
     {
         var insults = new List<InsultNode>();
+        TextAsset jsonFile = Resources.Load<TextAsset>("insults");
+        //ListItem items = JsonUtility.FromJson<ListItem>(jsonFile);
+        Debug.Log(jsonFile.ToString());
+
         insults.Add(CreateNode(
             "This is the END for you, you gutter-crawling cur!",
             "And I’ve got a little TIP for you, get the POINT?"));
