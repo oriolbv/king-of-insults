@@ -15,6 +15,7 @@ public class GameplayManager : ExtendedBehaviour
     public GameObject PlayerLivesText;
     public GameObject EnemyLivesText;
 
+    public GameObject RoundText;
 
     private GameplayState _gs;
     private InsultNode[] _insults;
@@ -26,6 +27,9 @@ public class GameplayManager : ExtendedBehaviour
     // Lives
     private int _playerLives = 3;
     private int _enemyLives = 3;
+
+    // Number of round
+    private int _nRound = 1;
 
 
     private void Start()
@@ -52,8 +56,6 @@ public class GameplayManager : ExtendedBehaviour
         }
 
         FillUI();
-
-
     }
 
     public void FillUI()
@@ -92,6 +94,7 @@ public class GameplayManager : ExtendedBehaviour
 
     public void RemoveUI()
     {
+        RoundText.GetComponentInChildren<Text>().text = "";
         foreach (Transform child in OptionButtons.transform)
         {
             Destroy(child.gameObject);
@@ -122,7 +125,6 @@ public class GameplayManager : ExtendedBehaviour
 
     public void CheckRoundWinner()
     {
-        Debug.Log("AND THE WINNER OF THIS ROUND IS....");
         if (_insultIdx == _answerIdx)
         {
             // Wins the one that answered the insult
@@ -164,24 +166,26 @@ public class GameplayManager : ExtendedBehaviour
         PlayerLivesText.GetComponentInChildren<Text>().text = "x" + _playerLives.ToString();
         EnemyLivesText.GetComponentInChildren<Text>().text = "x" + _enemyLives.ToString();
 
-        Debug.Log("Espera 1");
-        
-        
-
         // Check if the game has finished
         if (_enemyLives == 0)
         {
-            Debug.Log("Enemy wins the game");
+            // Player wins the game
+            GameData.GameWinner = 1;
             _gs.actualGameplayState.ToEndGameState();
             SceneManager.LoadScene("EndGameScene");
         }
         if (_playerLives == 0)
         {
-            Debug.Log("Player wins the game");
+            // Enemy wins the game
+            GameData.GameWinner = 2;
             _gs.actualGameplayState.ToEndGameState();
             SceneManager.LoadScene("EndGameScene");
         }
 
+        _nRound += 1;
+
+        RoundText.GetComponentInChildren<Text>().text = "Round " + _nRound.ToString();
+        
         // Initializate all for the next round
         Wait(2, () => {
             InitRound();
@@ -256,4 +260,3 @@ public class GameplayManager : ExtendedBehaviour
     }
 
 }
-
