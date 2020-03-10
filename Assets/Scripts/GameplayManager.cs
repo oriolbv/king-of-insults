@@ -3,7 +3,6 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
 public class GameplayManager : ExtendedBehaviour
 {
     public Transform OptionButtons;
@@ -83,7 +82,7 @@ public class GameplayManager : ExtendedBehaviour
 
     public void RemoveUI()
     {
-        RoundText.GetComponentInChildren<Text>().text = "";
+        
         foreach (Transform child in OptionButtons.transform)
         {
             Destroy(child.gameObject);
@@ -156,37 +155,43 @@ public class GameplayManager : ExtendedBehaviour
         EnemyLivesText.GetComponentInChildren<Text>().text = "x" + _enemyLives.ToString();
 
         // Check if the game has finished
-        if (_enemyLives == 0)
+        if (_enemyLives == 0 || _playerLives == 0) 
         {
-            // Player wins the game
-            Wait(1, () => {
-                EndGame(1);
-            }); 
+            if (_enemyLives == 0)
+            {
+                // Player wins the game
+                Wait(1, () => {
+                    EndGame(1);
+                });
+            }
+            else
+            {
+                // Enemy wins the game
+                Wait(1, () => {
+                    EndGame(2);
+                });
+            }
         }
-        if (_playerLives == 0)
+        else
         {
-            // Enemy wins the game
-            Wait(1, () => {
-                EndGame(2);
+            // Prepare next round
+            _nRound += 1;
+
+            RoundText.GetComponentInChildren<Text>().text = "Round " + _nRound.ToString();
+            RemoveUI();
+            // Initializate all for the next round
+            Wait(2, () => {
+                InitRound();
             });
         }
-
-        _nRound += 1;
-
-        RoundText.GetComponentInChildren<Text>().text = "Round " + _nRound.ToString();
-        
-        // Initializate all for the next round
-        Wait(2, () => {
-            InitRound();
-        });
     }
    
 
 
     private void InitRound()
     {
-        RemoveUI();
 
+        RoundText.GetComponentInChildren<Text>().text = "";
         EnemyText.GetComponentInChildren<Text>().text = "";
         PlayerText.GetComponentInChildren<Text>().text = "";
 
@@ -210,7 +215,7 @@ public class GameplayManager : ExtendedBehaviour
         else
         {
             // First round of the duel
-            int player = GetRandomPlayer();
+            int player = Utils.GetRandomPlayer();
             _firstTurn = player;
             if (player == 1)
             {
@@ -224,7 +229,6 @@ public class GameplayManager : ExtendedBehaviour
                 // Enemy will choose randomly his first insult
                 WriteEnemyOption();
             }
-
         }
         FillUI();
     }
@@ -260,18 +264,5 @@ public class GameplayManager : ExtendedBehaviour
             _answerIdx = index;
             CheckRoundWinner();
         }
-
     }
-
-    void OnMouseOver()
-    {
-        Debug.Log(gameObject.name);
-    }
-
-    private int GetRandomPlayer()
-    {
-        // Return a random integer number between 1 [inclusive] and 3 [exclusive]
-        return Random.Range(1, 3);
-    }
-
 }
