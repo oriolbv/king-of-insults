@@ -5,11 +5,14 @@ Adventure game based in the insult duels from the famous game series Monkey Isla
 In this game we're a farmer angry with the people of the city. 
 
 ## How to play
-King of Insults is 
+You can play King of Insults only with the mouse, because it's based in a point and click game. 
 
 ## Implementation
 ### Scenes
-
+This game consists of 3 differents scenes:
+- Start scene.
+- Game scene.
+- End scene.
 
 ### Scripts
 
