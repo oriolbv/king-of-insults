@@ -159,16 +159,16 @@ public class GameplayManager : ExtendedBehaviour
         if (_enemyLives == 0)
         {
             // Player wins the game
-            GameData.GameWinner = 1;
-            _gs.actualGameplayState.ToEndGameState();
-            SceneManager.LoadScene("EndGameScene");
+            Wait(1, () => {
+                EndGame(1);
+            }); 
         }
         if (_playerLives == 0)
         {
             // Enemy wins the game
-            GameData.GameWinner = 2;
-            _gs.actualGameplayState.ToEndGameState();
-            SceneManager.LoadScene("EndGameScene");
+            Wait(1, () => {
+                EndGame(2);
+            });
         }
 
         _nRound += 1;
@@ -183,7 +183,7 @@ public class GameplayManager : ExtendedBehaviour
    
 
 
-    public void InitRound()
+    private void InitRound()
     {
         RemoveUI();
 
@@ -229,6 +229,13 @@ public class GameplayManager : ExtendedBehaviour
         FillUI();
     }
 
+
+    private void EndGame(int gameWinner)
+    {
+        GameData.GameWinner = gameWinner;
+        _gs.actualGameplayState.ToEndGameState();
+        SceneManager.LoadScene("EndGameScene");
+    }
 
     private void FillListener(Button button, int index)
     {
