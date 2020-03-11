@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEditorInternal.VersionControl;
-using UnityEngine;
+﻿using UnityEngine;
 
 public static class InsultFiller
 {

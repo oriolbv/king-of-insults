@@ -16,6 +16,11 @@ public class GameplayManager : ExtendedBehaviour
 
     public GameObject RoundText;
 
+
+
+    private AudioSource playerAudioSource;
+    private AudioSource enemyAudioSource;
+
     private GameplayState _gs;
     private InsultNode[] _insults;
     private int _insultIdx = -1;
@@ -39,6 +44,10 @@ public class GameplayManager : ExtendedBehaviour
         _gs = new GameplayState();
 
         RoundText.GetComponentInChildren<Text>().text = "Round " + _nRound.ToString();
+
+        // Initialize AudioSource
+        playerAudioSource = PlayerText.GetComponentInChildren<AudioSource>();
+        enemyAudioSource = EnemyText.GetComponentInChildren<AudioSource>();
 
         // Initializate all for the next round
         Wait(2, () => {
@@ -82,7 +91,6 @@ public class GameplayManager : ExtendedBehaviour
 
     public void RemoveUI()
     {
-        
         foreach (Transform child in OptionButtons.transform)
         {
             Destroy(child.gameObject);
@@ -92,23 +100,42 @@ public class GameplayManager : ExtendedBehaviour
     public void WritePlayerOption(int index)
     {
         PlayerText.GetComponentInChildren<Text>().text = ((_gs.actualGameplayState is PlayerTurnState && _insultIdx == -1) ? _insults[index].Insult : _insults[index].Answer);
+        playerAudioSource.Play();
+        Wait(2, () => {
+            if (_insultIdx == -1)
+            {
+                _insultIdx = index;
+                // Transition to EnemyTurnState
+                _gs.actualGameplayState.ToEnemyTurnState();
+                // Enemy will choose randomly his first insult
+                WriteEnemyOption();
+            }
+            else
+            {
+                _answerIdx = index;
+                CheckRoundWinner();
+            }
+        });
     }
 
     public void WriteEnemyOption() 
     {
         int insultIdx = Random.Range(0, _insults.Length);
         EnemyText.GetComponentInChildren<Text>().text = (_gs.actualGameplayState is EnemyTurnState ? _insults[insultIdx].Insult : _insults[insultIdx].Answer);
-        if (_firstTurn == 1)
-        {
-            _answerIdx = insultIdx;
-            CheckRoundWinner();
-        }
-        else
-        {
-            _insultIdx = insultIdx;
-            _gs.actualGameplayState.ToPlayerTurnState();
-            FillUI();
-        }
+        enemyAudioSource.Play();
+        Wait(2, () => {
+            if (_firstTurn == 1)
+            {
+                _answerIdx = insultIdx;
+                CheckRoundWinner();
+            }
+            else
+            {
+                _insultIdx = insultIdx;
+                _gs.actualGameplayState.ToPlayerTurnState();
+                FillUI();
+            }
+        });
     }
 
     public void CheckRoundWinner()
@@ -251,18 +278,6 @@ public class GameplayManager : ExtendedBehaviour
     {
         Debug.Log("Index button: " + index.ToString());
         WritePlayerOption(index);
-        if (_insultIdx == -1)
-        {
-            _insultIdx = index;
-            // Transition to EnemyTurnState
-            _gs.actualGameplayState.ToEnemyTurnState();
-            // Enemy will choose randomly his first insult
-            WriteEnemyOption();
-        } 
-        else
-        {
-            _answerIdx = index;
-            CheckRoundWinner();
-        }
+        
     }
 }
