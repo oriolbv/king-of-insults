@@ -19,3 +19,7 @@ This game consists of 3 differents scenes:
 
 ### Sprites
 All the sprites in the game have been created using the pixel art tool Aseprite.
+
+## Documentation
+You can find a short Game Design document in the following link.
+Also, there is a video showing the full gameplay here.
