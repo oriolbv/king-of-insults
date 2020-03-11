@@ -97,7 +97,7 @@ public class GameplayManager : ExtendedBehaviour
         }
     }
 
-    public void WritePlayerOption(int index)
+    private void WritePlayerOption(int index)
     {
         PlayerText.GetComponentInChildren<Text>().text = ((_gs.actualGameplayState is PlayerTurnState && _insultIdx == -1) ? _insults[index].Insult : _insults[index].Answer);
         playerAudioSource.Play();
@@ -118,7 +118,7 @@ public class GameplayManager : ExtendedBehaviour
         });
     }
 
-    public void WriteEnemyOption() 
+    private void WriteEnemyOption() 
     {
         int insultIdx = Random.Range(0, _insults.Length);
         EnemyText.GetComponentInChildren<Text>().text = (_gs.actualGameplayState is EnemyTurnState ? _insults[insultIdx].Insult : _insults[insultIdx].Answer);
@@ -138,7 +138,7 @@ public class GameplayManager : ExtendedBehaviour
         });
     }
 
-    public void CheckRoundWinner()
+    private void CheckRoundWinner()
     {
         if (_insultIdx == _answerIdx)
         {
@@ -213,8 +213,6 @@ public class GameplayManager : ExtendedBehaviour
         }
     }
    
-
-
     private void InitRound()
     {
 
