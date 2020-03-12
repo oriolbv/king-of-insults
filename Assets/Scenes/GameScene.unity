@@ -464,8 +464,6 @@ MonoBehaviour:
   PlayerLivesText: {fileID: 1911443718}
   EnemyLivesText: {fileID: 14385796}
   RoundText: {fileID: 309319293}
-  PlayerChatter: {fileID: 0}
-  EnemyChatter: {fileID: 0}
 --- !u!1 &309319293
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,8 +1115,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 818.1, y: -25}
-  m_SizeDelta: {x: 1020.4, y: 190.9}
+  m_AnchoredPosition: {x: 819.48, y: -30.35}
+  m_SizeDelta: {x: 1026.13, y: 201.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1201071130
 MonoBehaviour:
@@ -1342,8 +1340,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.32716957}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.7, y: 240.4}
-  m_SizeDelta: {x: 1022.1, y: 424.3}
+  m_AnchoredPosition: {x: -2.78, y: 245.75}
+  m_SizeDelta: {x: 1023.95, y: 435}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1480791830
 MonoBehaviour:
