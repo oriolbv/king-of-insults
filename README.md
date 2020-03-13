@@ -21,5 +21,5 @@ This game consists of 3 differents scenes:
 All the sprites in the game have been created using the pixel art tool Aseprite.
 
 ## Documentation
-You can find a short Game Design document in the following link.
+You can find a short Game Design document in the following [link](https://github.com/oriolbv/king-of-insults/blob/master/Doc/king_of_insults_demo.mkv).
 Also, there is a video showing the full gameplay here.
